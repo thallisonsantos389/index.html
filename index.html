@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário Undertale</title>
+  <style>
+    :root {
+      --bg: #090b16;
+      --card: #15182a;
+      --accent: #ff3b3b;
+      --text: #f4f4f4;
+      --muted: #b7b9c9;
+      --line: #363a55;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top, #252b52 0%, var(--bg) 55%);
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .container {
+      width: min(760px, 100%);
+      background: rgba(21, 24, 42, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .45);
+    }
+
+    .hero {
+      position: relative;
+      height: 230px;
+      background: #191326;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: .82;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 20%, rgba(9, 11, 22, .92) 100%);
+    }
+
+    .hero h1 {
+      position: absolute;
+      z-index: 1;
+      left: 28px;
+      bottom: 18px;
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 3.3rem);
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0 #000;
+    }
+
+    .content { padding: 28px; }
+
+    .intro {
+      margin-top: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    form { display: grid; gap: 18px; margin-top: 24px; }
+
+    label { display: block; margin-bottom: 7px; font-weight: bold; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0e1020;
+      color: var(--text);
+      font: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--accent);
+      border-color: transparent;
+    }
+
+    textarea { min-height: 110px; resize: vertical; }
+
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      color: var(--muted);
+    }
+
+    .choices label {
+      margin: 0;
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    .choices input { width: auto; accent-color: var(--accent); }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 18px;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+    }
+
+    button:hover { background: #e42332; transform: translateY(-1px); }
+
+    .note {
+      margin: 20px 0 0;
+      font-size: .82rem;
+      color: #8589a4;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <img src="https://files.manuscdn.com/search-media/310519663912206649/mKiH7Lgncs4oChkVPyXAoH/MJeRUYpoCEQXWpNHFNsSGU.png" alt="Ilustração temática de Undertale">
+      <h1>UNDERTALE</h1>
+    </header>
+
+    <section class="content">
+      <p class="intro">Conte um pouco sobre sua jornada pelo Subterrâneo. Suas escolhas fazem a diferença!</p>
+
+      <form onsubmit="enviarFormulario(event)">
+        <div>
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+        </div>
+
+        <div>
+          <label for="personagem">Personagem favorito</label>
+          <select id="personagem" name="personagem" required>
+            <option value="">Escolha uma opção</option>
+            <option>Sans</option>
+            <option>Papyrus</option>
+            <option>Toriel</option>
+            <option>Undyne</option>
+            <option>Alphys</option>
+            <option>Asriel</option>
+            <option>Outro</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Qual rota você prefere?</label>
+          <div class="choices">
+            <label><input type="radio" name="rota" value="Pacifista" required> Pacifista</label>
+            <label><input type="radio" name="rota" value="Neutra"> Neutra</label>
+            <label><input type="radio" name="rota" value="Genocida"> Genocida</label>
+          </div>
+        </div>
+
+        <div>
+          <label for="nota">Nota para o jogo</label>
+          <input type="number" id="nota" name="nota" min="0" max="10" placeholder="0 a 10" required>
+        </div>
+
+        <div>
+          <label for="comentario">Sua opinião</label>
+          <textarea id="comentario" name="comentario" placeholder="O que você mais gosta em Undertale?"></textarea>
+        </div>
+
+        <button type="submit">Enviar resposta</button>
+      </form>
+
+      <p class="note">Este é um formulário demonstrativo e não envia dados para um servidor.</p>
+    </section>
+  </main>
+
+  <script>
+    function enviarFormulario(event) {
+      event.preventDefault();
+      const nome = document.getElementById('nome').value;
+      alert(`Obrigado, ${nome}! Sua resposta foi registrada localmente.`);
+    }
+  </script>
+</body>
+</html>
